@@ -42,8 +42,9 @@ ns-ticket-tracker/
 │   │   │   ├── client.ts     # Axios + auth-интерсептор
 │   │   │   └── tickets.ts   # API-функции
 │   │   ├── hooks/
-│   │   │   ├── useTickets.ts # TanStack Query v5
-│   │   │   └── useAuth.tsx   # AuthContext + useAuth
+│   │   │   ├── useTickets.ts    # TanStack Query v5 + useStats + useOverdueCount
+│   │   │   ├── useAuth.tsx      # AuthContext + useAuth
+│   │   │   └── useSavedFilters.ts  # localStorage-пресеты фильтров
 │   │   ├── i18n/
 │   │   │   ├── index.ts      # i18next init (fallback ru, localStorage)
 │   │   │   ├── en.json       # Английские переводы
@@ -51,9 +52,12 @@ ns-ticket-tracker/
 │   │   │   └── react-i18next.d.ts  # Типизированный t()
 │   │   ├── types/ticket.ts
 │   │   └── components/
-│   │       ├── Layout.tsx          # Шапка + language switcher
-│   │       ├── TicketTable.tsx     # Таблица + подтверждение удаления
-│   │       ├── TicketDetailModal.tsx  # Попап с деталями заявки
+│   │       ├── Layout.tsx
+│   │       ├── DashboardStats.tsx       # Мини-дашборд (4 карточки + приоритеты)
+│   │       ├── OverdueBanner.tsx        # Баннер зависших заявок >3 дней
+│   │       ├── SavedFiltersDropdown.tsx # Сохранённые виды фильтров
+│   │       ├── TicketTable.tsx
+│   │       ├── TicketDetailModal.tsx
 │   │       ├── TicketForm.tsx
 │   │       ├── SearchBar.tsx
 │   │       ├── FilterBar.tsx
@@ -64,6 +68,12 @@ ns-ticket-tracker/
 │   │       ├── LoadingSpinner.tsx
 │   │       ├── ErrorMessage.tsx
 │   │       └── EmptyState.tsx
+│   ├── test/
+│   │   ├── setup.ts                     # Vitest setup (happy-dom, cleanup)
+│   │   ├── utils.tsx                    # renderWithProviders (i18n wrapper)
+│   │   ├── useSavedFilters.test.ts
+│   │   ├── OverdueBanner.test.tsx
+│   │   └── DashboardStats.test.tsx
 │   ├── index.html
 │   ├── package.json
 │   ├── tsconfig.json
@@ -110,9 +120,16 @@ npm run dev
 
 ### Тесты
 
+**Бэкенд (32 теста):**
 ```bash
 cd backend
 .venv/bin/python -m pytest tests/ -v
+```
+
+**Фронтенд (13 тестов):**
+```bash
+cd frontend
+npm test
 ```
 
 ## Бизнес-правила
@@ -122,6 +139,9 @@ cd backend
 - Нельзя перевести заявку из `done` обратно в другой статус
 - Удаление админом — двухшаговое подтверждение (таблица + попап)
 - Клик по заголовку заявки открывает карточку с полными данными
+- Дашборд: 4 карточки (всего/новых/в работе/завершённых) + распределение по приоритетам
+- Баннер зависших заявок: жёлтое предупреждение для заявок в работе дольше 3 дней, клик — фильтрация + автоскролл к таблице
+- Сохранённые фильтры: пресеты в localStorage, переключение в один клик
 - Интерфейс на русском и английском, переключение в шапке, сохранение в localStorage
 - Фильтрация, поиск, сортировка, пагинация — на бэкенде
 - `POST /auth/login` ограничен 5 запросами в минуту
@@ -134,6 +154,7 @@ cd backend
 | POST | `/auth/login` | Все | Basic-вход админа (rate-limited) |
 | POST | `/tickets` | Все | Создать заявку |
 | GET | `/tickets` | Все | Список (фильтр/поиск/сорт/пагинация) |
+| GET | `/tickets/stats` | Все | Агрегаты по статусам и приоритетам |
 | PATCH | `/tickets/{id}/status` | Все | Изменить статус |
 | DELETE | `/tickets/{id}` | Админ | Удалить заявку |
 

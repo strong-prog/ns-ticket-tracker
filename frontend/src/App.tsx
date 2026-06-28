@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useTickets, useStats, useOverdueCount } from "./hooks/useTickets";
 import { useSavedFilters } from "./hooks/useSavedFilters";
@@ -26,6 +26,8 @@ export default function App() {
   const [sortBy, setSortBy] = useState("created_at");
   const [order, setOrder] = useState<"asc" | "desc">("desc");
   const [page, setPage] = useState(1);
+  const tableRef = useRef<HTMLDivElement>(null);
+  const scrollToTable = useRef(false);
 
   const filters: TicketFilters = {
     search: search || undefined,
@@ -67,6 +69,13 @@ export default function App() {
     setPage(1);
   };
 
+  useEffect(() => {
+    if (scrollToTable.current && !isLoading && data && data.items.length > 0) {
+      tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToTable.current = false;
+    }
+  }, [data, isLoading]);
+
   return (
     <Layout>
       <div className="flex justify-end mb-4">
@@ -77,7 +86,10 @@ export default function App() {
       <OverdueBanner
         count={overdueCount}
         days={3}
-        onClick={() => setStatus("in_progress")}
+        onClick={() => {
+          scrollToTable.current = true;
+          setStatus("in_progress");
+        }}
       />
 
       <TicketForm />
@@ -124,10 +136,10 @@ export default function App() {
       )}
       {data && data.items.length === 0 && <EmptyState />}
       {data && data.items.length > 0 && (
-        <>
+        <div ref={tableRef}>
           <TicketTable tickets={data.items} />
           <Pagination page={data.page} pages={data.pages} onPageChange={setPage} />
-        </>
+        </div>
       )}
     </Layout>
   );

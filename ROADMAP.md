@@ -14,7 +14,7 @@
 - [x] `app/routers/auth.py` — `POST /auth/login` (rate-limited: 5/minute)
 - [x] `app/routers/tickets.py` — CRUD `/tickets` с DI-зависимостями
 - [x] `app/main.py` — `create_app()` factory, CORS, глобальный exception handler, HTTPSRedirectMiddleware, `Base.metadata.create_all()`
-- [x] Тесты — 28 тестов (pytest + TestClient + in-memory SQLite), все проходят
+- [x] Тесты — 32 теста (pytest + TestClient + in-memory SQLite), все проходят
 
 ## Этап 2 — Фронтенд (React + TypeScript) ✅
 
@@ -28,6 +28,7 @@
 - [x] `src/components/` (15 компонентов): Layout, AdminLogin, TicketTable, TicketDetailModal, TicketForm, SearchBar, FilterBar, SortControls, StatusChanger, Pagination, LoadingSpinner, ErrorMessage, EmptyState
 - [x] `App.tsx` — оркестратор: стейт фильтров, композиция компонентов
 - [x] `main.tsx` — QueryClientProvider + AuthProvider
+- [x] Тесты — 13 тестов (Vitest + Testing Library + happy-dom), все проходят
 
 ## Этап 3 — Интеграция и проверка ✅
 
@@ -133,7 +134,7 @@
 
 - [x] `GET /tickets?status=in_progress` — существующий эндпоинт, фронт считает давность
 - [x] `OverdueBanner.tsx` — жёлтый баннер над таблицей: «N заявок в работе дольше 3 дней»
-- [x] Клик по баннеру — переход к отфильтрованному списку
+- [x] Клик по баннеру — переход к отфильтрованному списку + автоскролл к первой заявке
 - [x] Без бэкграунд-задач, без нотификаций — чистый UI
 
 ### 8.3. Сохранённые фильтры
