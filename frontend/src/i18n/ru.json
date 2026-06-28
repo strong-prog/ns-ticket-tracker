@@ -76,6 +76,20 @@
     "updated": "Обновлено",
     "close": "Закрыть"
   },
+  "overdue": {
+    "banner": "{{count}} заявок в работе дольше {{days}} дней — нажмите для просмотра"
+  },
+  "dashboard": {
+    "total": "Всего",
+    "priorityDistribution": "Распределение по приоритетам"
+  },
+  "savedFilters": {
+    "label": "Сохранённые виды",
+    "saveCurrent": "Сохранить текущий",
+    "namePlaceholder": "Название фильтра",
+    "cancel": "Отмена",
+    "save": "Сохранить"
+  },
   "ticketTable": {
     "id": "ID",
     "title": "Заголовок",

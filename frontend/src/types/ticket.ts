@@ -29,6 +29,12 @@ export interface TicketList {
   pages: number;
 }
 
+export interface TicketStats {
+  total: number;
+  by_status: Record<string, number>;
+  by_priority: Record<string, number>;
+}
+
 export interface TicketFilters {
   status?: TicketStatus;
   priority?: TicketPriority;

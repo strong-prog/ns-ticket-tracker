@@ -1,11 +1,16 @@
 from fastapi import APIRouter, Depends, Query
 
 from ..auth import require_admin
-from ..crud import create_ticket, delete_ticket, get_ticket, get_tickets, ticket_to_read
+from ..crud import create_ticket, delete_ticket, get_ticket, get_ticket_stats, get_tickets, ticket_to_read
 from ..database import get_db
-from ..schemas import TicketCreate, TicketList, TicketRead, TicketUpdateStatus
+from ..schemas import TicketCreate, TicketList, TicketRead, TicketStats, TicketUpdateStatus
 
 router = APIRouter()
+
+
+@router.get("/stats", response_model=TicketStats)
+def stats(db=Depends(get_db)):
+    return get_ticket_stats(db)
 
 
 @router.post("", response_model=TicketRead, status_code=201)

@@ -1,5 +1,10 @@
 import api from "./client";
-import type { Ticket, TicketCreate, TicketList, TicketFilters, TicketUpdateStatus } from "../types/ticket";
+import type { Ticket, TicketCreate, TicketList, TicketFilters, TicketStats, TicketUpdateStatus } from "../types/ticket";
+
+export async function fetchStats(): Promise<TicketStats> {
+  const { data } = await api.get<TicketStats>("/tickets/stats");
+  return data;
+}
 
 export async function fetchTickets(filters: TicketFilters): Promise<TicketList> {
   const params: Record<string, string | number> = {};

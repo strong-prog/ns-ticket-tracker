@@ -46,6 +46,12 @@ class TicketRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+class TicketStats(BaseModel):
+    total: int
+    by_status: dict[str, int]
+    by_priority: dict[str, int]
+
+
 class TicketList(BaseModel):
     items: list[TicketRead]
     total: int

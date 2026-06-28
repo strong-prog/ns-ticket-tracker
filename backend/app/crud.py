@@ -1,4 +1,4 @@
-from sqlalchemy import or_
+from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 
 from .exceptions import TicketIsDoneError, TicketNotFoundError
@@ -82,3 +82,23 @@ def delete_ticket(db: Session, ticket: Ticket) -> None:
 
 def ticket_to_read(ticket: Ticket) -> TicketRead:
     return TicketRead.model_validate(ticket)
+
+
+def get_ticket_stats(db: Session) -> dict:
+    status_rows = (
+        db.query(Ticket.status, func.count(Ticket.id))
+        .group_by(Ticket.status)
+        .all()
+    )
+    by_status = {row[0]: row[1] for row in status_rows}
+
+    priority_rows = (
+        db.query(Ticket.priority, func.count(Ticket.id))
+        .group_by(Ticket.priority)
+        .all()
+    )
+    by_priority = {row[0]: row[1] for row in priority_rows}
+
+    total = sum(by_status.values())
+
+    return {"total": total, "by_status": by_status, "by_priority": by_priority}

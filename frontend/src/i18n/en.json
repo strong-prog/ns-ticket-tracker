@@ -76,6 +76,20 @@
     "updated": "Updated",
     "close": "Close"
   },
+  "overdue": {
+    "banner": "{{count}} ticket(s) in progress for over {{days}} days — click to review"
+  },
+  "dashboard": {
+    "total": "Total",
+    "priorityDistribution": "Priority distribution"
+  },
+  "savedFilters": {
+    "label": "Saved views",
+    "saveCurrent": "Save current",
+    "namePlaceholder": "Filter name",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
   "ticketTable": {
     "id": "ID",
     "title": "Title",

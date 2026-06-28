@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useTickets } from "./hooks/useTickets";
+import { useTickets, useStats, useOverdueCount } from "./hooks/useTickets";
+import { useSavedFilters } from "./hooks/useSavedFilters";
 import AdminLogin from "./components/AdminLogin";
+import DashboardStats from "./components/DashboardStats";
+import OverdueBanner from "./components/OverdueBanner";
 import EmptyState from "./components/EmptyState";
 import ErrorMessage from "./components/ErrorMessage";
 import FilterBar from "./components/FilterBar";
 import Layout from "./components/Layout";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Pagination from "./components/Pagination";
+import SavedFiltersDropdown from "./components/SavedFiltersDropdown";
 import SearchBar from "./components/SearchBar";
 import SortControls from "./components/SortControls";
 import TicketForm from "./components/TicketForm";
@@ -34,6 +38,9 @@ export default function App() {
   };
 
   const { data, isLoading, isError, error, refetch } = useTickets(filters);
+  const { data: stats } = useStats();
+  const { data: overdueCount = 0 } = useOverdueCount(3);
+  const { presets, save, remove } = useSavedFilters();
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -66,6 +73,13 @@ export default function App() {
         <AdminLogin />
       </div>
 
+      {stats && <DashboardStats stats={stats} />}
+      <OverdueBanner
+        count={overdueCount}
+        days={3}
+        onClick={() => setStatus("in_progress")}
+      />
+
       <TicketForm />
 
       <div className="flex flex-col gap-4 mb-4">
@@ -82,6 +96,21 @@ export default function App() {
             order={order}
             onSortByChange={handleSortByChange}
             onOrderChange={handleOrderChange}
+          />
+          <SavedFiltersDropdown
+            presets={presets}
+            onApply={(p) => {
+              setSearch(p.search);
+              setStatus(p.status);
+              setPriority(p.priority);
+              setSortBy(p.sortBy);
+              setOrder(p.order);
+              setPage(1);
+            }}
+            onSave={(name) => {
+              save({ name, search, status, priority, sortBy, order });
+            }}
+            onDelete={remove}
           />
         </div>
       </div>
