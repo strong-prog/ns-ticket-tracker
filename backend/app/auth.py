@@ -10,6 +10,7 @@ security = HTTPBasic()
 
 
 def verify_admin(credentials: HTTPBasicCredentials = Depends(security)) -> str:
+    """Basic Auth: timing-safe сравнение логина и bcrypt-хеша пароля."""
     is_correct_username = secrets.compare_digest(
         credentials.username.encode(), settings.admin_username.encode()
     )
@@ -26,4 +27,5 @@ def verify_admin(credentials: HTTPBasicCredentials = Depends(security)) -> str:
 
 
 def require_admin(username: str = Depends(verify_admin)) -> str:
+    """FastAPI-зависимость: только для админа."""
     return username

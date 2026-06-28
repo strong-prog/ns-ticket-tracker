@@ -5,6 +5,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class TicketCreate(BaseModel):
+    """Входная схема создания заявки. Отклоняет неизвестные поля (extra=forbid)."""
     model_config = ConfigDict(extra="forbid")
 
     title: str = Field(..., min_length=3, max_length=120)
@@ -29,12 +30,14 @@ class TicketCreate(BaseModel):
 
 
 class TicketUpdateStatus(BaseModel):
+    """Смена статуса заявки. Допустимы: new, in_progress, done."""
     model_config = ConfigDict(extra="forbid")
 
     status: str = Field(..., pattern="^(new|in_progress|done)$")
 
 
 class TicketRead(BaseModel):
+    """Выходная схема заявки. Строится из ORM-модели (from_attributes=True)."""
     id: int
     title: str
     description: str | None
@@ -47,6 +50,7 @@ class TicketRead(BaseModel):
 
 
 class TicketStats(BaseModel):
+    """Агрегаты для мини-дашборда: всего заявок, по статусам, по приоритетам."""
     total: int
     by_status: dict[str, int]
     by_priority: dict[str, int]

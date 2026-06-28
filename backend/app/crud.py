@@ -7,6 +7,7 @@ from .schemas import TicketCreate, TicketRead
 
 
 def create_ticket(db: Session, data: TicketCreate) -> Ticket:
+    """Создать заявку со статусом new."""
     ticket = Ticket(
         title=data.title,
         description=data.description,
@@ -29,6 +30,7 @@ def get_tickets(
     page: int = 1,
     limit: int = 20,
 ) -> tuple[list[Ticket], int]:
+    """Список заявок с фильтрацией, ILIKE-поиском, whitelist-сортировкой и пагинацией."""
     query = db.query(Ticket)
 
     if status:
@@ -57,6 +59,7 @@ def get_tickets(
 
 
 def get_ticket(db: Session, ticket_id: int) -> Ticket:
+    """Получить заявку по ID или выбросить TicketNotFoundError."""
     ticket = db.query(Ticket).filter(Ticket.id == ticket_id).first()
     if ticket is None:
         raise TicketNotFoundError(ticket_id)
@@ -64,6 +67,7 @@ def get_ticket(db: Session, ticket_id: int) -> Ticket:
 
 
 def update_ticket_status(db: Session, ticket: Ticket, new_status: str) -> Ticket:
+    """Изменить статус заявки. Для done-заявок выбрасывает TicketIsDoneError."""
     if ticket.status == TicketStatus.DONE:
         raise TicketIsDoneError("change status of")
 
@@ -74,6 +78,7 @@ def update_ticket_status(db: Session, ticket: Ticket, new_status: str) -> Ticket
 
 
 def delete_ticket(db: Session, ticket: Ticket) -> None:
+    """Удалить заявку. Для done-заявок выбрасывает TicketIsDoneError."""
     if ticket.status == TicketStatus.DONE:
         raise TicketIsDoneError("delete")
     db.delete(ticket)
@@ -81,10 +86,12 @@ def delete_ticket(db: Session, ticket: Ticket) -> None:
 
 
 def ticket_to_read(ticket: Ticket) -> TicketRead:
+    """Преобразовать ORM-модель в Pydantic-схему для ответа API."""
     return TicketRead.model_validate(ticket)
 
 
 def get_ticket_stats(db: Session) -> dict:
+    """Агрегаты: сколько заявок по статусам и приоритетам."""
     status_rows = (
         db.query(Ticket.status, func.count(Ticket.id))
         .group_by(Ticket.status)

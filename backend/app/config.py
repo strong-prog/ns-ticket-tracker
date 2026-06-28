@@ -5,6 +5,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
+    """Настройки из переменных окружения с префиксом NS_TICKET_. Пароль хешируется bcrypt."""
     database_url: str = "postgresql://postgres:postgres@localhost:5432/ns_tickets"
     admin_username: str
     admin_password: str
