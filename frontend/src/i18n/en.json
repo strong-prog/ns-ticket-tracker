@@ -1,0 +1,91 @@
+{
+  "common": {
+    "status": {
+      "new": "New",
+      "inProgress": "In Progress",
+      "done": "Done"
+    },
+    "priority": {
+      "low": "Low",
+      "normal": "Normal",
+      "high": "High"
+    }
+  },
+  "layout": {
+    "title": "NS Ticket Tracker"
+  },
+  "langSwitcher": {
+    "label": "RU"
+  },
+  "admin": {
+    "mode": "Admin mode",
+    "login": "Login",
+    "logout": "Logout",
+    "username": "Username",
+    "password": "Password",
+    "invalidCredentials": "Invalid credentials"
+  },
+  "error": {
+    "retry": "Retry",
+    "failedToLoad": "Failed to load tickets"
+  },
+  "empty": {
+    "title": "No tickets found",
+    "subtitle": "Create a new ticket to get started."
+  },
+  "filter": {
+    "allStatuses": "All statuses",
+    "allPriorities": "All priorities"
+  },
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next",
+    "pageInfo": "Page {{page}} of {{pages}}"
+  },
+  "search": {
+    "placeholder": "Search by title or description..."
+  },
+  "sort": {
+    "label": "Sort by {{field}}",
+    "date": "Date",
+    "priority": "Priority",
+    "status": "Status",
+    "title": "Title",
+    "asc": "Ascending",
+    "desc": "Descending"
+  },
+  "ticketForm": {
+    "heading": "New Ticket",
+    "titlePlaceholder": "Title *",
+    "descriptionPlaceholder": "Description (optional)",
+    "create": "Create",
+    "creating": "Creating...",
+    "validation": {
+      "titleMinLength": "Title must be at least 3 characters"
+    },
+    "error": {
+      "createFailed": "Failed to create ticket"
+    }
+  },
+  "ticketDetail": {
+    "title": "Ticket #{{id}}",
+    "description": "Description",
+    "status": "Status",
+    "priority": "Priority",
+    "created": "Created",
+    "updated": "Updated",
+    "close": "Close"
+  },
+  "ticketTable": {
+    "id": "ID",
+    "title": "Title",
+    "status": "Status",
+    "priority": "Priority",
+    "created": "Created",
+    "actions": "Actions",
+    "delete": "Delete",
+    "confirmPrompt": "Delete ticket #{{id}}?",
+    "cancel": "Cancel",
+    "confirm": "Delete"
+  }
+}

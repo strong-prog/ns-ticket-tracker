@@ -1,0 +1,91 @@
+{
+  "common": {
+    "status": {
+      "new": "Новый",
+      "inProgress": "В работе",
+      "done": "Выполнено"
+    },
+    "priority": {
+      "low": "Низкий",
+      "normal": "Обычный",
+      "high": "Высокий"
+    }
+  },
+  "layout": {
+    "title": "NS Ticket Tracker"
+  },
+  "langSwitcher": {
+    "label": "EN"
+  },
+  "admin": {
+    "mode": "Режим администратора",
+    "login": "Войти",
+    "logout": "Выйти",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "invalidCredentials": "Неверные учётные данные"
+  },
+  "error": {
+    "retry": "Повторить",
+    "failedToLoad": "Не удалось загрузить заявки"
+  },
+  "empty": {
+    "title": "Заявок не найдено",
+    "subtitle": "Создайте новую заявку, чтобы начать."
+  },
+  "filter": {
+    "allStatuses": "Все статусы",
+    "allPriorities": "Все приоритеты"
+  },
+  "pagination": {
+    "prev": "Назад",
+    "next": "Вперёд",
+    "pageInfo": "Страница {{page}} из {{pages}}"
+  },
+  "search": {
+    "placeholder": "Поиск по заголовку или описанию..."
+  },
+  "sort": {
+    "label": "Сорт. по {{field}}",
+    "date": "Дата",
+    "priority": "Приоритет",
+    "status": "Статус",
+    "title": "Заголовок",
+    "asc": "По возрастанию",
+    "desc": "По убыванию"
+  },
+  "ticketForm": {
+    "heading": "Новая заявка",
+    "titlePlaceholder": "Заголовок *",
+    "descriptionPlaceholder": "Описание (необязательно)",
+    "create": "Создать",
+    "creating": "Создание...",
+    "validation": {
+      "titleMinLength": "Заголовок должен быть не менее 3 символов"
+    },
+    "error": {
+      "createFailed": "Не удалось создать заявку"
+    }
+  },
+  "ticketDetail": {
+    "title": "Заявка #{{id}}",
+    "description": "Описание",
+    "status": "Статус",
+    "priority": "Приоритет",
+    "created": "Создано",
+    "updated": "Обновлено",
+    "close": "Закрыть"
+  },
+  "ticketTable": {
+    "id": "ID",
+    "title": "Заголовок",
+    "status": "Статус",
+    "priority": "Приоритет",
+    "created": "Создано",
+    "actions": "Действия",
+    "delete": "Удалить",
+    "confirmPrompt": "Удалить заявку #{{id}}?",
+    "cancel": "Отмена",
+    "confirm": "Удалить"
+  }
+}

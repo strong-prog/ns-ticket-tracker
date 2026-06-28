@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+*.db
+
+# Environment
+.env
+
+# Node
+node_modules/
+dist/
+
+# IDE
+.idea/
